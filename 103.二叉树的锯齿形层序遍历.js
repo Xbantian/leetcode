@@ -18,20 +18,18 @@
  * @return {number[][]}
  */
 var zigzagLevelOrder = function (root) {
-  let res = [];
-  fun(root, 0, res);
+  // 前序/中序遍历加层级反转
+  const res = [];
+  if (!root) return res;
+  const order = (node, level) => {
+    if (!res[level]) {
+      res[level] = [];
+    }
+    res[level][level % 2 != 1 ? 'push' : 'unshift'](node.val);
+    node.left && order(node.left, level + 1);
+    node.right && order(node.right, level + 1);
+  };
+  order(root, 0);
   return res;
-};
-const fun = (tree, level = 0, res) => {
-  if (!tree || tree.val == null) {
-    return;
-  }
-  if (!res[level]) {
-    res[level] = [];
-  }
-  res[level][level % 2 ? 'push' : 'unshift'](tree.val);
-
-  fun(tree.right, level + 1, res);
-  fun(tree.left, level + 1, res);
 };
 // @lc code=end

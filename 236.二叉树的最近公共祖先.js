@@ -19,9 +19,29 @@
  * @return {TreeNode}
  */
 var lowestCommonAncestor = function (root, p, q) {
-  if (!root || root === p || root === q) return root;
-  var resL = lowestCommonAncestor(root.left, p, q);
-  var resR = lowestCommonAncestor(root.right, p, q);
-  return resL && resR ? root : resL || resR;
+  // 1.首先使用递归：root是null或者root等于p或q，说明root是p，q的公共祖先（递归结束），以此来递归左右子树
+  // 2.然后在左右子树递归完后进行判断
+
+  // 若左右子树递归函数返回的都不为空，则root就是p，q的公共祖先
+  // 若左子树递归函数返回的值为空，则p，q都在右子树，直接返回right即可
+  // 若右子树递归函数返回的值为空，则p，q都在左子树，直接返回left即可
+
+  const travelTree = function (root, p, q) {
+    // 递归终止条件
+    if (root === null || root === p || root === q) {
+      return root;
+    }
+    let left = travelTree(root.left, p, q);
+    let right = travelTree(root.right, p, q);
+    //如果在某一个节点的左右子树都能找到p和q，说明这个节点就是公共祖先
+    if (left !== null && right !== null) {
+      return root;
+    }
+    if (left === null) {
+      return right;
+    }
+    return left;
+  };
+  return travelTree(root, p, q);
 };
 // @lc code=end

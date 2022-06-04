@@ -10,8 +10,8 @@
  * @return {number}
  */
 var maxProfit = function (prices) {
-  var min = Number.MAX_SAFE_INTEGER;
-  var max = 0;
+  var min = prices[i];
+  var max = 0; //最大差值
   for (var i = 0; i < prices.length; i++) {
     min = Math.min(min, prices[i]);
     max = Math.max(max, prices[i] - min);

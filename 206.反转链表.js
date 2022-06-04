@@ -30,6 +30,19 @@ var reverseList = function (head) {
   return newHead;
 };
 
+var reverseList = function (head) {
+  // let [pre, node] = [null, head];
+  let pre = null,
+    node = head;
+  while (node) {
+    const temp = node.next;
+    node.next = pre;
+    pre = node;
+    node = temp;
+  }
+  return pre;
+};
+
 // var reverseList = function(head) {
 //     if (head == null || head.next == null) {
 //         return head;
